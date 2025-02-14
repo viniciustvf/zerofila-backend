@@ -9,16 +9,15 @@ import {
   import { Fila } from './models/fila.model';
   import { FilaTypeOrmRepository } from './repositories/implementations/fila.typeorm.repository';
   import { FilaUpdateDto } from './dto/fila-update.dto';
-import { EMPRESA_REPOSITORY_TOKEN } from '@/empresa/repositories/empresa.repository.interface';
-import { EmpresaTypeOrmRepository } from '@/empresa/repositories/implementations/empresa.typeorm.repository';
+import { EMPRESA_REPOSITORY_TOKEN } from '../empresa/repositories/empresa.repository.interface';
+import { EmpresaTypeOrmRepository } from '../empresa/repositories/implementations/empresa.typeorm.repository';
 import { FilaDto } from './dto/fila.dto';
 import { FilaGateway } from './fila.gateway';
 import * as crypto from 'crypto';
-import { Cron } from '@nestjs/schedule';
 import { Twilio } from 'twilio/lib';
-import { Client } from '@/client/models/client.model';
-import { ClientTypeOrmRepository } from '@/client/repositories/implementations/client.typeorm.repository';
-import { CLIENT_REPOSITORY_TOKEN } from '@/client/repositories/client.repository.interface';
+import { Client } from '../client/models/client.model';
+import { ClientTypeOrmRepository } from '../client/repositories/implementations/client.typeorm.repository';
+import { CLIENT_REPOSITORY_TOKEN } from '../client/repositories/client.repository.interface';
   
 @Injectable()
 export class FilaService {
@@ -124,7 +123,7 @@ export class FilaService {
     }
   }
 
-  @Cron('*/5 * * * * *')
+  //@Cron('*/5 * * * * *')
   async generateAndUpdateHash(): Promise<void> {
     const timestamp = Math.floor(Date.now() / 1000);
     const dataToHash = `${timestamp}`;
@@ -150,7 +149,7 @@ export class FilaService {
     }
   }
 
-  @Cron('*/10 * * * * *')
+  //@Cron('*/10 * * * * *')
   async checkQueueAndNotify(): Promise<void> {
     console.log('🔍 Verificando a fila...');
 

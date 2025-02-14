@@ -8,7 +8,7 @@ export class MailerService {
   private nodemailerTransport: Mail;
 
   constructor(private readonly configService: ConfigService) {
-    this.nodemailerTransport = createTransport({
+    /*this.nodemailerTransport = createTransport({
       host: this.configService.get<string>('EMAIL_HOST'),
       port: this.configService.get<number>('EMAIL_PORT'),
       auth: {
@@ -17,7 +17,7 @@ export class MailerService {
       },
       debug: this.configService.get<boolean>('EMAIL_DEBUG'),
       logger: false,
-    });
+    });*/
   }
 
   sendMail(options: any) {

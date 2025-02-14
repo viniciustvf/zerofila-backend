@@ -15,7 +15,7 @@ export function configureSwaggerDocs(
       .setTitle('API')
       .setDescription('The API description')
       .setVersion('1.0')
-      .addServer(configService.get<string>('API_URL'), 'Local server')
+      .addServer('http://localhost:3000', 'Local server')
       .addTag('auth')
       .addTag('empresa')
       .addTag('fila')

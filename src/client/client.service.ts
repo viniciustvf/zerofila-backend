@@ -10,8 +10,8 @@ import {
   import { ClientTypeOrmRepository } from './repositories/implementations/client.typeorm.repository';
   import { ClientUpdateDto } from './dto/client-update.dto';
 import { ClientDto } from './dto/client.dto';
-import { FILA_REPOSITORY_TOKEN } from '@/fila/repositories/fila.repository.interface';
-import { FilaTypeOrmRepository } from '@/fila/repositories/implementations/fila.typeorm.repository';
+import { FILA_REPOSITORY_TOKEN } from '../fila/repositories/fila.repository.interface';
+import { FilaTypeOrmRepository } from '../fila/repositories/implementations/fila.typeorm.repository';
   
   @Injectable()
   export class ClientService {

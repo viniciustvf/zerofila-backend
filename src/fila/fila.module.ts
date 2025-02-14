@@ -7,10 +7,10 @@ import { FilaController } from './fila.controller';
 import { Fila } from './models/fila.model';
 import { FilaService } from './fila.service';
 import { provideFilaRepository } from './repositories/fila.repository.provider';
-import { EmpresaModule } from '@/empresa/empresa.module';
+import { EmpresaModule } from '../empresa/empresa.module';
 import { FilaGateway } from './fila.gateway';
-import { Client } from '@/client/models/client.model';
-import { ClientModule } from '@/client/client.module';
+import { Client } from '../client/models/client.model';
+import { ClientModule } from '../client/client.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({

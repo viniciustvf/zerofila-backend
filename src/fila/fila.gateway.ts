@@ -1,11 +1,11 @@
-import { Client } from '@/client/models/client.model';
+import { Client } from '../client/models/client.model';
 import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Inject } from '@nestjs/common';
 import { FILA_REPOSITORY_TOKEN } from './repositories/fila.repository.interface';
 import { FilaTypeOrmRepository } from './repositories/implementations/fila.typeorm.repository';
-import { CLIENT_REPOSITORY_TOKEN } from '@/client/repositories/client.repository.interface';
-import { ClientTypeOrmRepository } from '@/client/repositories/implementations/client.typeorm.repository';
+import { CLIENT_REPOSITORY_TOKEN } from '../client/repositories/client.repository.interface';
+import { ClientTypeOrmRepository } from '../client/repositories/implementations/client.typeorm.repository';
 import { Fila } from './models/fila.model';
 
 @WebSocketGateway({

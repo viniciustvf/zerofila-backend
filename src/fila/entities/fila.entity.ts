@@ -1,5 +1,5 @@
-import { Client } from "@/client/models/client.model";
-import { Empresa } from "@/empresa/models/empresa.model";
+import { Client } from "../../client/models/client.model";
+import { Empresa } from "../../empresa/models/empresa.model";
 
 export class Fila {
     constructor(

@@ -56,6 +56,22 @@ import {
       return this.filaService.findById(filaId);
     }
 
+    @Post('/generate-hash')
+    @ApiResponse({
+      status: 200,
+      description: 'Trigger hash generation and update',
+    })
+    @Public()
+    public async triggerHashUpdate(): Promise<{ message: string }> {
+      try {
+        await this.filaService.generateAndUpdateHash();
+        return { message: 'Hash generated and updated successfully!' };
+      } catch (error) {
+        console.error('Error triggering hash update:', error);
+        throw new BadRequestException('Failed to generate and update hash');
+      }
+    }
+
     @Get('findByIdWithRelations/:filaId')
     @Public()
     @ApiResponse({
@@ -167,6 +183,22 @@ import {
       } catch (error) {
         console.error('Erro no checkClientInQueue:', error);
         throw error;
+      }
+    }
+
+    @Get('/check-queue')
+    @Public()
+    @ApiResponse({
+      status: 200,
+      description: 'Verifica a fila e notifica os clientes',
+    })
+    public async checkQueueAndNotify(): Promise<{ message: string }> {
+      try {
+        await this.filaService.checkQueueAndNotify();
+        return { message: 'Fila verificada e clientes notificados!' };
+      } catch (error) {
+        console.error('Erro ao verificar a fila:', error);
+        throw new BadRequestException('Erro ao verificar a fila');
       }
     }
 

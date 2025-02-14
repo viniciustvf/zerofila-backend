@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Fila } from '@/fila/models/fila.model';
+import { Fila } from '../../fila/models/fila.model';
 
 @Entity()
 export class Client {

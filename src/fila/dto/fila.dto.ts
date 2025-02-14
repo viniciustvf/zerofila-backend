@@ -1,4 +1,3 @@
-import { Empresa } from '@/empresa/models/empresa.model';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 

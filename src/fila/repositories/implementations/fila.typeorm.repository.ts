@@ -1,7 +1,7 @@
 import { Repository, UpdateResult } from 'typeorm';
 import { HashingService } from '../../../shared/hashing/hashing.service';
 import { FilaRepository } from '../fila.repository.interface';
-import { Fila } from '@/fila/models/fila.model';
+import { Fila } from '../../../fila/models/fila.model';
 
 export class FilaTypeOrmRepository implements FilaRepository {
   constructor(

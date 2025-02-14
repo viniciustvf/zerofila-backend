@@ -21,7 +21,7 @@ export class RegisterService {
       registerEmpresaDto.password,
     );
 
-    this.sendMailRegisterEmpresa(registerEmpresaDto);
+    //this.sendMailRegisterEmpresa(registerEmpresaDto);
 
     return this.empresaService.create(registerEmpresaDto);
   }

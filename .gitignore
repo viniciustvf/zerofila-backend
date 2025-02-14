@@ -45,3 +45,4 @@ logs/
 
 # Arquivos do Docker (caso esteja usando)
 docker-compose.override.yml
+.vercel

@@ -1,4 +1,4 @@
-import { Fila } from "@/fila/models/fila.model";
+import { Fila } from "../../fila/models/fila.model";
 
 export class Client {
     constructor(

@@ -1,7 +1,7 @@
-import { Empresa } from '@/empresa/models/empresa.model';
+import { Empresa } from '../../empresa/models/empresa.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Client } from '@/client/models/client.model';
+import { Client } from '../../client/models/client.model';
 
 @Entity()
 export class Fila {

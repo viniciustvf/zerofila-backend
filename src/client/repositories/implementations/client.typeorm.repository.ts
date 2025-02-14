@@ -1,7 +1,7 @@
 import { Between, Repository, UpdateResult } from 'typeorm';
 import { HashingService } from '../../../shared/hashing/hashing.service';
 import { ClientRepository } from '../client.repository.interface';
-import { Client } from '@/client/models/client.model';
+import { Client } from '../../../client/models/client.model';
 
 export class ClientTypeOrmRepository implements ClientRepository {
   constructor(
