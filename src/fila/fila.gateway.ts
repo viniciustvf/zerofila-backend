@@ -12,7 +12,7 @@ import { Fila } from './models/fila.model';
   namespace: '/ws',
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'],
     credentials: true,
   }
 })export class FilaGateway {

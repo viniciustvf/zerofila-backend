@@ -14,20 +14,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
   const configService = app.get<ConfigService>(ConfigService);
 
-  // ✅ Configurar CORS
-  expressApp.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  }));
-
-  // ✅ Configurar WebSocket (Socket.IO) corretamente com CORS
-  const ioAdapter = new IoAdapter(app);
-  app.useWebSocketAdapter(ioAdapter);
-
-  // ✅ Definir prefixo global da API REST
-  app.setGlobalPrefix('api');
+  // ✅ Configurar CORS corretamente
+  expressApp.use(
+    cors({
+      origin: '*',
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true,
+    }),
+  );
 
   // ✅ Configurar validações globais
   app.useGlobalPipes(
@@ -42,18 +37,23 @@ async function bootstrap() {
   configureAuthSwaggerDocs(app, configService);
   configureSwaggerDocs(app, configService);
 
-  // ✅ Definir porta do servidor (API + WebSocket)
+  // ✅ Definir prefixo global da API REST
+  app.setGlobalPrefix('api');
+
+  // ✅ Definir porta do servidor
   const port = configService.get<number>('NODE_API_PORT') || 3000;
   await app.listen(port, '0.0.0.0');
 
-  // ✅ Logs informativos
-  if (configService.get<string>('NODE_ENV') !== 'production') {
-    Logger.debug(`${await app.getUrl()} - Environment: ${configService.get<string>('NODE_ENV')}`, 'Environment');
-    Logger.debug(`Swagger API: ${await app.getUrl()}/docs`, 'Swagger');
-    Logger.debug(`WebSocket rodando em ws://localhost:${port}/ws`, 'WebSocket');
-  }
+  // ✅ Configurar WebSocket (Socket.IO) corretamente **depois de iniciar**
+  const ioAdapter = new IoAdapter(app);
+  app.useWebSocketAdapter(ioAdapter);
+
+  // ✅ Melhorando os logs informativos
+  const baseUrl = await app.getUrl();
+  Logger.log(`🚀 API rodando em: ${baseUrl}/api`, 'Bootstrap');
+  Logger.log(`📄 Swagger Docs: ${baseUrl}/docs`, 'Swagger');
+  Logger.log(`🔌 WebSocket rodando em: ws://${baseUrl}/ws`, 'WebSocket');
+  Logger.log(`🌍 Ambiente: ${configService.get<string>('NODE_ENV') || 'development'}`, 'Environment');
 }
 
 bootstrap();
-
-export default express();
