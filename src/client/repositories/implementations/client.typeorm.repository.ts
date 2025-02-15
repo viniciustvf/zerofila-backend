@@ -14,7 +14,7 @@ export class ClientTypeOrmRepository implements ClientRepository {
       .createQueryBuilder('client')
       .innerJoin('client.fila', 'fila')
       .innerJoin('fila.empresa', 'empresa')
-      .where('empresa.id = :empresaId', { empresaId })
+      .where('empresa.id = :empresaId', { Number(empresaId) })
       .andWhere('client.entryTime BETWEEN :startDate AND :endDate', { startDate, endDate })
       .orderBy('client.entryTime', 'ASC');
   
