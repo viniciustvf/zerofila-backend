@@ -174,17 +174,35 @@ import {
       @Query('filaId') filaId: string
     ) {
       try {
-        if (!telefone || !filaId) {
-          throw new BadRequestException('Telefone e Fila ID são obrigatórios.');
+        console.log('📡 Requisição recebida:', { telefone, filaId });
+    
+        // Verificar o tipo real de filaId
+        console.log('📊 Tipo de filaId recebido:', typeof filaId, ' | Valor:', filaId);
+    
+        const parsedFilaId = parseInt(filaId, 10); // 🛠️ Converte para número inteiro
+        console.log('🔍 Após conversão: parsedFilaId =', parsedFilaId);
+    
+        if (!telefone || Number.isNaN(parsedFilaId) || parsedFilaId <= 0) {
+          console.error('❌ Erro: ID da fila inválido!ASASCCCCCCCC', { telefone, filaId, parsedFilaId });
+          throw new BadRequestException('ID da fila inválido. AFSGSDGDS');
         }
     
-        const client = await this.filaService.findClientInQueue(telefone, filaId);
+        console.log(`✅ Parâmetros validados: telefone=${telefone}, filaId=${parsedFilaId}`);
+    
+        const client = await this.filaService.findClientInQueue(telefone, parsedFilaId);
+        
+        if (!client) {
+          console.warn(`⚠️ Nenhum cliente encontrado para filaId=${parsedFilaId} e telefone=${telefone}`);
+        }
+    
+        console.log('✅ Resposta da API:', { exists: !!client, client });
+    
         return { exists: !!client, client };
       } catch (error) {
-        console.error('Erro no checkClientInQueue:', error);
+        console.error('❌ Erro no checkClientInQueue:', error);
         throw error;
       }
-    }
+    }          
 
     @Get('/check-queue')
     @Public()

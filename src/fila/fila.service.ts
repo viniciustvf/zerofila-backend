@@ -234,24 +234,28 @@ export class FilaService {
     return await this.filaRepository.deleteFila(fila);
   }
 
-  async findClientInQueue(telefone: string, filaId: string): Promise<Client | null> {
+  async findClientInQueue(telefone: string, filaId: string | number): Promise<Client | null> {
     try {
-      if (!telefone || !filaId) {
-        throw new BadRequestException('Telefone e Fila ID são obrigatórios.');
+      console.log('📡 findClientInQueue chamado com:', { telefone, filaId });
+  
+      const parsedFilaId = Number(filaId);
+      if (!telefone || isNaN(parsedFilaId)) {
+        console.error('❌ Erro: Parâmetros inválidos!', { telefone, filaId });
+        throw new BadRequestException('Telefone e Fila ID são obrigatórios e devem ser numéricos.');
       }
   
-      const fila = await this.filaRepository.findByIdWithRelations(filaId);
+      const fila = await this.filaRepository.findByIdWithRelations(parsedFilaId);
       if (!fila) {
-        throw new NotFoundException(`Fila com ID ${filaId} não encontrada.`);
+        throw new NotFoundException(`Fila com ID ${parsedFilaId} não encontrada.`);
       }
   
       const client = fila.clients.find((c) => c.telefone === telefone);
       return client || null;
     } catch (error) {
-      console.error('Erro ao buscar cliente na fila:', error);
+      console.error('❌ Erro ao buscar cliente na fila:', error);
       throw error;
     }
-  }
+  }  
 
   public async getEstimatedWaitTime(filaId: string): Promise<{ estimatedTime: number }> {
     // Buscar clientes que já foram atendidos e possuem exitTime válido
