@@ -10,12 +10,14 @@ import { Fila } from './models/fila.model';
 
 @WebSocketGateway({
   namespace: '/ws',
+  transports: ['websocket'],
   cors: {
-    origin: '*',
-    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'],
+    origin: 'https://zerofila-frontend.vercel.app',
+    methods: ['GET', 'POST'],
     credentials: true,
   }
-})export class FilaGateway {
+})
+export class FilaGateway {
   @WebSocketServer() server: Server;
 
   constructor(
