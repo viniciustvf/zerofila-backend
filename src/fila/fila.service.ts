@@ -40,7 +40,7 @@ export class FilaService {
   ) {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
-    //this.twilioClient = new Twilio(accountSid, authToken);
+    this.twilioClient = new Twilio(accountSid, authToken);
   }
   
   public async findAll(empresaId?: string): Promise<Fila[]> {
@@ -183,7 +183,7 @@ export class FilaService {
 
         if (!this.notifiedClients.has(nextInLine.telefone)) {
           try {
-            //await this.sendSms('+55' + nextInLine.telefone, queue.empresa.name + ' Você é o próximo da fila ' + queue.name + '! Por favor, prepare-se.');
+            await this.sendSms('+55' + nextInLine.telefone, queue.empresa.name + ' Você é o próximo da fila ' + queue.name + '! Por favor, prepare-se.');
             this.notifiedClients.add(nextInLine.telefone);
             console.log(`✅ Mensagem enviada para ${nextInLine.telefone}.`);
           } catch (error) {
