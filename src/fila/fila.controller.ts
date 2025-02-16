@@ -27,8 +27,8 @@ import {
   import { Fila } from './models/fila.model';
   
   @ApiTags('fila')
-@ApiBearerAuth()
-@AuthGuard(AuthType.Bearer)
+  @ApiBearerAuth()
+  @AuthGuard(AuthType.None)
   @Controller('fila')
   export class FilaController {
     constructor(private readonly filaService: FilaService) {}
