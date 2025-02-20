@@ -30,16 +30,26 @@ export class ClientTypeOrmRepository implements ClientRepository {
     const endDateFormatted = endDateParsed.toISOString().slice(0, 19).replace('T', ' ');
   
     return this.clientRepository
-      .createQueryBuilder('client')
-      .innerJoin('fila', 'fila', 'fila.id = client.lastFilaId')
-      .innerJoin('fila.empresa', 'empresa')
-      .where('empresa.id = :empresaId', { empresaId: empresaIdParsed })
-      .andWhere('client.entryTime BETWEEN :startDate AND :endDate', { 
-        startDate: startDateFormatted, 
-        endDate: endDateFormatted 
-      })
-      .orderBy('client.entryTime', 'ASC')
-      .getMany();
+    .createQueryBuilder('client')
+    .leftJoinAndSelect('client.fila', 'fila') // Carrega a relação completa, pode ser NULL
+    .leftJoin('fila.empresa', 'empresa') // Agora empresa pode ser NULL
+    .select([
+      'client.id AS id',
+      'client.name AS name',
+      'client.telefone AS telefone',
+      'client.position AS position',
+      'client.entryTime AS entryTime',
+      'client.exitTime AS exitTime',
+      'client.lastFilaId AS lastFilaId',
+      'fila.id AS filaId'
+    ])
+    .where('empresa.id = :empresaId OR empresa.id IS NULL', { empresaId: empresaIdParsed })
+    .andWhere('client.entryTime BETWEEN :startDate AND :endDate', { 
+      startDate: startDateFormatted, 
+      endDate: endDateFormatted 
+    })
+    .orderBy('client.entryTime', 'ASC')
+    .getRawMany(); 
   }  
   
   async findByLastFilaId(lastFilaId: string): Promise<Client[]> {
